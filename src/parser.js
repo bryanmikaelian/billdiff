@@ -2,47 +2,53 @@ function parseAmendments(content) {
   const amendments = [];
 
   const patterns = {
-    // "by striking 'X' and inserting 'Y'"
-    strikeAndInsert: /by striking [`"']([^`"']+)[`"'] and inserting [`"']([^`"']+)[`"']/gi,
+    // "by striking ``X'' and inserting ``Y''" (legislative style quotes)
+    strikeAndInsert: /by striking ``(.+?)'' and inserting ``(.+?)''/gi,
 
-    // "by striking 'X'" (without replacement)
-    strikeOnly: /by striking [`"']([^`"']+)[`"'](?! and inserting)/gi,
+    // Also handle regular quotes
+    strikeAndInsertAlt:
+      /by striking ["'](.+?)["'] and inserting ["'](.+?)["']/gi,
 
-    // "by inserting 'X' after/before 'Y'"
-    insertAfter: /by inserting [`"']([^`"']+)[`"'] after [`"']([^`"']+)[`"']/gi,
+    // "by striking ``X''" (without replacement)
+    strikeOnly: /by striking ``(.+?)''(?! and inserting)/gi,
+    strikeOnlyAlt: /by striking ["'](.+?)["'](?! and inserting)/gi,
+
+    // "by inserting ``X'' after/before ``Y''"
+    insertAfter: /by inserting ``(.+?)'' after ``(.+?)''/gi,
+    insertAfterAlt: /by inserting ["'](.+?)["'] after ["'](.+?)["']/gi,
 
     // "is amended to read as follows"
-    amendedToRead: /is amended to read as follows:\s*[`"']([^`"']+)[`"']/gi,
+    amendedToRead: /is amended to read as follows:\s*``(.+?)''/gi,
 
-    // Multi-line strikes
-    complexStrike: /by striking [`"']([\s\S]+?)[`"'];?\s*and/gi
+    // Multi-line strikes with legislative quotes
+    complexStrike: /by striking ``([\s\S]+?)''[;,]?\s*and/gi,
   };
 
   // Process each pattern
   let match;
-  while (match = patterns.strikeAndInsert.exec(content)) {
+  while ((match = patterns.strikeAndInsert.exec(content))) {
     amendments.push({
-      type: 'replace',
+      type: "replace",
       old: cleanText(match[1]),
       new: cleanText(match[2]),
-      position: match.index
+      position: match.index,
     });
   }
 
-  while (match = patterns.strikeOnly.exec(content)) {
+  while ((match = patterns.strikeOnly.exec(content))) {
     amendments.push({
-      type: 'delete',
+      type: "delete",
       old: cleanText(match[1]),
-      position: match.index
+      position: match.index,
     });
   }
 
-  while (match = patterns.insertAfter.exec(content)) {
+  while ((match = patterns.insertAfter.exec(content))) {
     amendments.push({
-      type: 'insert',
+      type: "insert",
       new: cleanText(match[1]),
       after: cleanText(match[2]),
-      position: match.index
+      position: match.index,
     });
   }
 
@@ -55,7 +61,7 @@ function parseAmendments(content) {
 function cleanText(text) {
   return text
     .trim()
-    .replace(/\s+/g, ' ')
+    .replace(/\s+/g, " ")
     .replace(/``/g, '"')
     .replace(/''/g, '"');
 }
