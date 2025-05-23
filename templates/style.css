@@ -1,0 +1,337 @@
+:root {
+    --color-addition: #22863a;
+    --color-deletion: #cb2431;
+    --color-addition-bg: #f0fff4;
+    --color-deletion-bg: #ffeef0;
+    --color-context: #586069;
+    --color-border: #d1d5da;
+    --color-primary: #0366d6;
+    --color-bg: #f6f8fa;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: #24292e;
+    background-color: var(--color-bg);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Header styles */
+header {
+    background-color: white;
+    border-bottom: 1px solid var(--color-border);
+    padding: 2rem 1rem;
+}
+
+.main-header {
+    text-align: center;
+}
+
+.main-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+header h2 {
+    font-size: 1.2rem;
+    color: var(--color-context);
+    font-weight: normal;
+    margin-bottom: 1rem;
+}
+
+.breadcrumb {
+    margin-bottom: 1rem;
+    color: var(--color-context);
+}
+
+.breadcrumb a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.bill-meta {
+    display: flex;
+    gap: 2rem;
+    color: var(--color-context);
+    font-size: 0.9rem;
+}
+
+/* Main content */
+main {
+    min-height: calc(100vh - 200px);
+    padding: 2rem 0;
+}
+
+/* Bills grid (index page) */
+.bills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.bill-card {
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 2rem;
+    transition: all 0.2s;
+}
+
+.bill-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.bill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.5rem;
+}
+
+.bill-card h2 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.bill-card h2 a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.bill-card h2 a:hover {
+    text-decoration: underline;
+}
+
+.bill-card h3 {
+    font-size: 1.1rem;
+    font-weight: normal;
+    color: #444;
+    margin-bottom: 1rem;
+}
+
+.bill-congress {
+    font-size: 0.875rem;
+    color: var(--color-context);
+    background: var(--color-bg);
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+}
+
+.bill-stats {
+    display: flex;
+    gap: 2rem;
+    font-size: 0.9rem;
+    color: var(--color-context);
+}
+
+.stat strong {
+    color: #24292e;
+}
+
+/* Sections list (bill page) */
+.sections-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.section-item {
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 1.5rem;
+    transition: all 0.2s;
+}
+
+.section-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.section-item h3 {
+    margin-bottom: 0.5rem;
+}
+
+.section-item h3 a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.section-item h3 a:hover {
+    text-decoration: underline;
+}
+
+.section-item p {
+    color: #444;
+    margin-bottom: 0.5rem;
+}
+
+.change-count {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background-color: var(--color-bg);
+    border-radius: 12px;
+    font-size: 0.875rem;
+    color: var(--color-context);
+}
+
+/* Diff styles */
+.diff-container {
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.diff-block {
+    border-bottom: 1px solid var(--color-border);
+}
+
+.diff-block:last-child {
+    border-bottom: none;
+}
+
+.diff-header {
+    background-color: var(--color-bg);
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--color-context);
+}
+
+.line {
+    display: flex;
+    font-family: 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+.diff-marker {
+    width: 40px;
+    text-align: center;
+    padding: 0.5rem 0;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.diff-content {
+    flex: 1;
+    padding: 0.5rem 1rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.line.addition {
+    background-color: var(--color-addition-bg);
+}
+
+.line.addition .diff-marker {
+    color: var(--color-addition);
+}
+
+.line.deletion {
+    background-color: var(--color-deletion-bg);
+}
+
+.line.deletion .diff-marker {
+    color: var(--color-deletion);
+}
+
+.line.context {
+    color: var(--color-context);
+}
+
+.no-changes {
+    padding: 3rem;
+    text-align: center;
+    color: var(--color-context);
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+}
+
+/* Raw text view */
+.raw-text {
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.raw-text summary {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 0.5rem;
+    user-select: none;
+}
+
+.raw-text summary:hover {
+    color: var(--color-primary);
+}
+
+.raw-text pre {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: var(--color-bg);
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--color-context);
+    font-size: 0.875rem;
+    border-top: 1px solid var(--color-border);
+    background: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .bills-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .bill-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .bill-meta {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .diff-content {
+        font-size: 0.75rem;
+        padding: 0.5rem;
+    }
+}

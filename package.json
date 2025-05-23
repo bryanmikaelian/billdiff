@@ -1,0 +1,15 @@
+{
+  "name": "legislative-diff-site",
+  "version": "1.0.0",
+  "description": "Static site generator for legislative amendments with diff visualization",
+  "scripts": {
+    "build": "node src/generator.js",
+    "dev": "node src/generator.js --watch",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "fs-extra": "^11.1.1",
+    "glob": "^10.3.3",
+    "chokidar": "^3.5.3"
+  }
+}}
